@@ -3,7 +3,7 @@
 #include <limits.h>
   #include <stdbool.h>
 #include "miheap.h"
-
+#define ve 1000000
 // A structure to represent a 
 // node in adjacency list
 struct MinHeap
@@ -68,18 +68,18 @@ struct Graph* createGraph(int V)
 {
     
     struct Graph* graph = (struct Graph*) 
-            malloc(sizeof(struct Graph));
+            malloc(ve*sizeof(struct Graph));
     graph->vertex = 0;
     
     
     // Create an array of adjacency lists.  
     // Size of array will be V
     graph->array = (struct List*) 
-       malloc(2 * sizeof(struct List));
+       malloc(ve * sizeof(struct List));
   
     // Initialize each adjacency list 
     // as empty by making head as NULL
-    for (int i = 0; i < (2); ++i){
+    for (int i = 0; i < ve; ++i){
         
         graph->array[i].head = NULL;
        graph->array[i].src_vi=1;
@@ -88,46 +88,21 @@ struct Graph* createGraph(int V)
 }
   
 // Adds an edge to an undirected graph
-void addEdge(struct Graph** graph, int src, 
+void addEdge(struct Graph* graph, int src, 
                    int dest, int weight)
 {
 
-    int size=0;
-    if(src>=dest){
-        size=src;
-    }
-    else
-    size=dest;
-    
-    int co=0;
-     if(((*graph)->vertex+2)<size){
-     
-      (*graph)->array = (struct List*)realloc((*graph)->array,sizeof(struct List*)*(size)); 
-     
-      for (int i =(*graph)->vertex+2 ; i<=(size); ++i){
-       
-           (*graph)->array[i].head = NULL;
-           (*graph)->array[i].src_vi=1;
-    
-       
-       }
-      }  //graph=graph1;
-    int t,t1;
-    if((*graph)->array[0].head!=NULL){
-     t=(*graph)->array[0].head[0].dest;
-    
+  
+    if((graph)->array[src].src_vi==1){
         
+        (graph)->vertex+=1;
+        (graph)->array[src].src_vi=0;
+       
     }
-    if((*graph)->array[src].src_vi==1){
+     if((graph)->array[dest].src_vi==1){
+        (graph)->vertex+=1;
+        (graph)->array[dest].src_vi=0;
         
-        (*graph)->vertex+=1;
-        (*graph)->array[src].src_vi=0;
-        co++;
-    }
-    if((*graph)->array[dest].src_vi==1){
-        (*graph)->vertex+=1;
-        (*graph)->array[dest].src_vi=0;
-        co++;
     }
   
     
@@ -135,12 +110,11 @@ void addEdge(struct Graph** graph, int src,
              
     struct Node* newNode = 
             new_Node(dest, weight);
-    newNode->next = (*graph)->array[src].head;
-    (*graph)->array[src].head = newNode;
+    newNode->next = (graph)->array[src].head;
+    (graph)->array[src].head = newNode;
    
   //free(graph1);
 }
-  
 // Structure to represent a min heap node
 struct MinHeapNode
 {

@@ -1,26 +1,87 @@
-// C / C++ program for Dijkstra's
-// shortest path algorithm for adjacency
-// list representation of graph
+
+#include<unistd.h>
+#include<sys/types.h>
+#include<sys/stat.h>
+#include<fcntl.h>
+#include <stdio.h>
+#include<string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
 #include "miheap.h"
 #include <stdbool.h>
-#define V 1000
-// Driver program to test above functions
+#include <ctype.h>
+#define a 100
 
 int main()
 {
-	// create the graph given in above fugure
-	 
+char line[a];
+char buf[a][a];
+int count=0;
+int array[a];
+char s[a] ;
+char choice;
+char c1;
+char s1[a];
+      int i=0;
+  while (fgets(line, sizeof(line), stdin)) {
+  strcat(s,line);
+ 
+    strcpy(&buf[i][0],line);
+  //int len=strnlen(line);
+  i++;
+  //
+      }
+    strcat(s1,buf[0]);
+ int j;
+  
+  for (j = 0; s1[j] != '\0'; j++){
+       if(j==0){
+        choice=s1[j];
+       }
+    };
+          
+     printf("%s",s1);    
+do{
+        
+        
+        switch (choice)
+        {
+        case 'A':
+          
+         
+         
+             
+             //free(array1);
+             
+         
+         //int j;
+         //for(j=0;j<=count;j++){
+              printf("this  is A");
+          //}
+          choice='S';
+            break;     
+        case 'S':
+		printf("this  is S");
+            choice='T';
+            break;	 
+        
+        case 'T': 
+            printf("this  is T");
+           choice='D';
+            break;
+        
+        default:
+            break;
+       
+        }
+    }while (choice != 'D');   
        
 
  
-
-  // taking input and storing it in an array
  
-	struct Graph* graph1 = createGraph(V);
-	struct Graph** graph=&graph1;
+	struct Graph* graph = createGraph();
+
 	addEdge(graph, 0, 1, 4);
 	addEdge(graph, 0, 7, 8);
 	addEdge(graph, 1, 2, 8);
@@ -34,9 +95,9 @@ int main()
 	addEdge(graph, 5, 6, 2);
 	addEdge(graph, 6, 7, 1);
 	addEdge(graph, 6, 8, 6);
-	addEdge(graph, 7, 8, 7);
-   
-	dijkstra(graph1, 0);
+	addEdge(graph, 9, 5, 7);
+	addEdge(graph, 0, 9, 1);
+	dijkstra(graph, 0);
      
 	return 0;
 }
