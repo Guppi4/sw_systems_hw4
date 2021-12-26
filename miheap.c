@@ -362,7 +362,7 @@ void dijkstra(struct Graph* graph, int src)
         while (pCrawl != NULL)
         {
             int v = pCrawl->dest;
-  
+            printf(" %d ",dist[1]);
             // If shortest distance to v is
             // not finalized yet, and distance to v
             // through u is less than its 
@@ -372,7 +372,7 @@ void dijkstra(struct Graph* graph, int src)
               pCrawl->weight + dist[u] < dist[v])
             {
                 dist[v] = dist[u] + pCrawl->weight;
-  
+                
                 // update distance 
                 // value in min heap also
                 decreaseKey(minHeap, v, dist[v]);

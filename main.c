@@ -15,8 +15,9 @@
 
 int main()
 {
+
 char stringf[a];
-struct Graph* graph = createGraph();
+
 char line[a];
 char buf[a][a];
 int count=0;
@@ -53,6 +54,7 @@ char s1[a];
     };
           
      printf("%s",stringf);    
+struct Graph* graph = createGraph();
 do{
         
         
@@ -63,25 +65,26 @@ do{
             
          
             for(int i=1;i<j;i+=2){
+             
               //printf(" %c",stringf[i]);
               if( stringf[i+1]=='T'){
                   break;
               }
             if(isalpha(stringf[i-1]) && isalpha(stringf[i+1])){
-               addEdge(graph,stringf[i],stringf[i],0);
+               addEdge(graph,stringf[i]-'0',stringf[i]-'0',0);
                printf("%c %c %c\n",stringf[i],stringf[i],0);
             }
             if(stringf[i-1]=='n'){
-                k=stringf[i];
-            addEdge(graph,k,stringf[i+1],stringf[i+2]);
+                k=stringf[i]-'0';
+            addEdge(graph,k,stringf[i+1]-'0',stringf[i+2]-'0');
             printf("%c %c %c\n",k,stringf[i+1],stringf[i+2]);
             }
              if(!isalpha(stringf[i-1]) && !isalpha(stringf[i+1])){
-               addEdge(graph,k,stringf[i+1],stringf[i+2]);
-             printf("%c %c %c\n",k,stringf[i+1],stringf[i+2]);
+               addEdge(graph,k,stringf[i+1]-'0',stringf[i+2]-'0');
+             printf("%d %d %d\n",k,stringf[i+1],stringf[i+2]);
              }
             }
-             dijkstra(graph, 0);
+             dijkstra(graph, 2);
         
             choice='D';
             break;     
