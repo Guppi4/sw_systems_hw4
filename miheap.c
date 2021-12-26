@@ -91,7 +91,13 @@ struct Graph* createGraph(int V)
 void addEdge(struct Graph* graph, int src, 
                    int dest, int weight)
 {
-
+   if(src==dest){
+    if((graph)->array[src].src_vi==1){
+    (graph)->array[src].src_vi==0;
+       (graph)->vertex+=1;
+       return;
+    }
+   }
   
     if((graph)->array[src].src_vi==1){
         
@@ -319,6 +325,7 @@ void dijkstra(struct Graph* graph, int src)
         minHeap->array[v] = newMinHeapNode(v, 
                                       dist[v]);
         minHeap->pos[v] = v;
+    
     }
   
     // Make dist value of src vertex 
