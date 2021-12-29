@@ -67,26 +67,25 @@ do{
             for(int i=1;i<j;i+=2){
              
               //printf(" %c",stringf[i]);
-              if( stringf[i+1]=='T'){
+              if( stringf[i+1]=='T' || stringf[i+1]=='S' || stringf[i+1]=='D' ){
+                    choice=stringf[i+1];
                   break;
               }
             if(isalpha(stringf[i-1]) && isalpha(stringf[i+1])){
                addEdge(graph,stringf[i]-'0',stringf[i]-'0',0);
-               printf("%c %c %c\n",stringf[i],stringf[i],0);
+               //printf("%c %c %c\n",stringf[i],stringf[i],0);
             }
             if(stringf[i-1]=='n'){
                 k=stringf[i]-'0';
             addEdge(graph,k,stringf[i+1]-'0',stringf[i+2]-'0');
-            printf("%c %c %c\n",k,stringf[i+1],stringf[i+2]);
+            //printf("%c %c %c\n",k,stringf[i+1],stringf[i+2]);
             }
              if(!isalpha(stringf[i-1]) && !isalpha(stringf[i+1])){
                addEdge(graph,k,stringf[i+1]-'0',stringf[i+2]-'0');
-             printf("%d %d %d\n",k,stringf[i+1],stringf[i+2]);
+             //printf("%d %d %d\n",k,stringf[i+1],stringf[i+2]);
              }
             }
-             dijkstra(graph, 2);
-        
-            choice='D';
+             
             break;     
         case 'S':
 		printf("this  is S");
