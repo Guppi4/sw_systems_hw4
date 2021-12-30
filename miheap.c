@@ -304,7 +304,7 @@ void printArr(int dist[], int n)
 // The main function that calculates 
 // distances of shortest paths from src to all
 // vertices. It is a O(ELogV) function
-void dijkstra(struct Graph* graph, int src)
+int dijkstra(struct Graph* graph, int src,int dest)
 {
     
     // Get the number of vertices in graph
@@ -362,7 +362,7 @@ void dijkstra(struct Graph* graph, int src)
         while (pCrawl != NULL)
         {
             int v = pCrawl->dest;
-            printf(" %d ",dist[1]);
+           // printf(" %d ",dist[1]);
             // If shortest distance to v is
             // not finalized yet, and distance to v
             // through u is less than its 
@@ -380,8 +380,11 @@ void dijkstra(struct Graph* graph, int src)
             pCrawl = pCrawl->next;
         }
     }
-  
-    printf("%d\n",graph->vertex);
+     
+    if(dist[dest]==INT_MAX){
+        return -1;
+    }
+    //printf("%d\n",graph->vertex);
     // print the calculated shortest distances
-    printArr(dist, V);
+     return dist[dest];
 }

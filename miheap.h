@@ -6,7 +6,7 @@ struct Graph;
 struct MinHeap;
 struct MinHeapNode;
 void minHeapify(struct MinHeap* minHeap, int idx);
-void dijkstra(struct Graph* graph, int src);
+int dijkstra(struct Graph* graph, int src,int dest);
 int isInMinHeap(struct MinHeap *minHeap, int v);
 void decreaseKey(struct MinHeap* minHeap, int v, int dist) ;
 struct MinHeapNode* extractMin(struct MinHeap* minHeap) ;

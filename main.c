@@ -26,24 +26,27 @@ char s[a] ;
 char choice;
 char c1;
 char s1[a];
-  int k;    
-      int i=0;
+int k;    
+int i=0;
   while (fgets(line, sizeof(line), stdin)) {
   strcat(s,line);
  
     strcpy(&buf[i][0],line);
   //int len=strnlen(line);
-  i++;
+    i++;
   //
       }
     strcat(s1,buf[0]);
  int j;
-  
+  int js=0;
   for (j = 0; s1[j] != '\0'; j++){
        if(j==0){
+        //printf("%c ",s1[j]);
         choice=s1[j];
        }
        if(s1[j]!=' '){
+       //printf("%c ",s1[j]);
+       js++;
        char cToStr[2];
          cToStr[1] = '\0';
         cToStr[0] = s1[j];
@@ -53,8 +56,14 @@ char s1[a];
        }
     };
           
-     printf("%s",stringf);    
+     //printf("%s",stringf);    
 struct Graph* graph = createGraph();
+int j_t;
+int j_s;
+int j_d;
+int j_b;
+int t_dijkstra=0;
+//printf("%d ",js);
 do{
         
         
@@ -62,39 +71,70 @@ do{
         {
         case 'A':
           
-            
+             //printf("TTT");
          
-            for(int i=1;i<j;i+=2){
-             
+            for(int i=1;i<strlen(stringf);i+=2){
+             //printf("%c ",stringf[i+1]);
+            
               //printf(" %c",stringf[i]);
-              if( stringf[i+1]=='T' || stringf[i+1]=='S' || stringf[i+1]=='D' ){
+              if( stringf[i+1]=='T' || stringf[i+1]=='S' || stringf[i+1]=='D' || stringf[i+1]=='B' ){
                     choice=stringf[i+1];
                   break;
               }
             if(isalpha(stringf[i-1]) && isalpha(stringf[i+1])){
                addEdge(graph,stringf[i]-'0',stringf[i]-'0',0);
-               //printf("%c %c %c\n",stringf[i],stringf[i],0);
+              // printf("%d %d %d\n",stringf[i]-'0',stringf[i]-'0',0);
             }
             if(stringf[i-1]=='n'){
                 k=stringf[i]-'0';
             addEdge(graph,k,stringf[i+1]-'0',stringf[i+2]-'0');
-            //printf("%c %c %c\n",k,stringf[i+1],stringf[i+2]);
+            //printf("%d %d %d\n",k,stringf[i+1]-'0',stringf[i+2]-'0');
             }
              if(!isalpha(stringf[i-1]) && !isalpha(stringf[i+1])){
                addEdge(graph,k,stringf[i+1]-'0',stringf[i+2]-'0');
-             //printf("%d %d %d\n",k,stringf[i+1],stringf[i+2]);
+             //printf("%d %d %d\n",k,stringf[i+1]-'0',stringf[i+2]-'0');
              }
             }
-             
+               
             break;     
         case 'S':
-		printf("this  is S");
-            choice='T';
+		      for (j_s=0;stringf[j_s]!='S' && j_s<strlen(stringf);j_s++){
+              
+           }
+           // printf("%c",stringf[j_s]);
+         printf("Dijsktra shortest path: %d\n",dijkstra(graph, stringf[j_s+1]-'0',stringf[j_s+2]-'0'));
+         //printf("%d %d",j_s+2,strlen(stringf)-2);
+         if(strlen(stringf)-2==j_s+2){
+             choice='D';
+             break;   
+              }
+         ///printf("this  is S");
+            
+            
             break;	 
         
         case 'T': 
-            printf("this  is T");
-           choice='D';
+           for (j_t=0;stringf[j_t]!='T';j_t++){
+              
+           }
+            for(int k=j_t+3; k<strlen(stringf)-2;k++){
+                    if(isalpha(stringf[k])){
+                        choice=stringf[k];
+                        break;
+                    }
+                    if(k==strlen(stringf)-2){
+                      choice='D';
+                      t_dijkstra+=dijkstra(graph,stringf[k-1]-'0',stringf[k]-'0');
+                      break;
+                    }
+                    
+                    t_dijkstra+=dijkstra(graph,stringf[k-1]-'0',stringf[k]-'0');  
+            //printf("%d %d\n",k,stringf[k]-'0');
+            }
+            printf("TSP shortest path: %d\n",t_dijkstra);
+           
+           
+            
             break;
         
         default:
