@@ -11,7 +11,7 @@
 #include "miheap.h"
 #include <stdbool.h>
 #include <ctype.h>
-#define a 100
+#define a 150
 
 int main()
 {
@@ -64,7 +64,7 @@ int j_d=0;
 int j_b=0;
 int t_dijkstra=0;
 int tr_dijkstra=0;
-printf("%s ",stringf);
+printf("%s",stringf);
 do{
         
         
@@ -84,7 +84,7 @@ do{
               }
             if(isalpha(stringf[i-1]) && isalpha(stringf[i+1])){
                addEdge(graph,stringf[i]-'0',stringf[i]-'0',0);
-              // printf("%d %d %d\n",stringf[i]-'0',stringf[i]-'0',0);
+              //printf("%d %d %d\n",stringf[i]-'0',stringf[i]-'0',0);
             }
             if(stringf[i-1]=='n'){
                 k=stringf[i]-'0';
@@ -93,7 +93,7 @@ do{
             }
              if(!isalpha(stringf[i-1]) && !isalpha(stringf[i+1])){
                addEdge(graph,k,stringf[i+1]-'0',stringf[i+2]-'0');
-            // printf("%d %d %d\n",k,stringf[i+1]-'0',stringf[i+2]-'0');
+            //printf("%d %d %d\n",k,stringf[i+1]-'0',stringf[i+2]-'0');
              }
             }
                
@@ -103,9 +103,11 @@ do{
            for (int i=j_b;stringf[i]!='B' && i<strlen(stringf);i++){
               j_b++;
            }
+            
             ifwehavenode(graph,stringf[j_b+1]-'0');
+          
            for(int i=j_b+1;i<strlen(stringf);i+=2){
-             //printf("%c ",stringf[i+1]);
+             ///printf("%c ",stringf[i+1]);
                     if(i==strlen(stringf)-2){
                       choice='E';
                       j_b++;
@@ -115,16 +117,17 @@ do{
               
               if( stringf[i+1]=='T' || stringf[i+1]=='S' || stringf[i+1]=='D' || stringf[i+1]=='B' ){
                     choice=stringf[i+1];
+                //printf(" %c \n",stringf[i+1]);
                   j_b++;
                   break;
               }
             
-             
+              
                addEdge(graph,stringf[j_b+1]-'0',stringf[i+1]-'0',stringf[i+2]-'0');
-             printf("%d %d %d\n",stringf[j_b+1]-'0',stringf[i+1]-'0',stringf[i+2]-'0');
+            //printf("%d %d %d\n",stringf[j_b+1]-'0',stringf[i+1]-'0',stringf[i+2]-'0');
              
             }
-           
+           //printf(" %c \n",stringf[j_b+1]);
         break;
         case 'D':
          //printf("Hello");
@@ -159,47 +162,86 @@ do{
             
             break;	 
         
-        case 'T': 
-           for (int i=j_t;stringf[i]!='T';i++){
+       case 'T': 
+           //find index of TSP chars in the string
+          for (int i=j_t;stringf[i]!='T';i++){
               j_t++;
-           }
-            //printf("%d %ld\n",j_t+3,strlen(stringf)-2);
-            for(int k=j_t+3; k<=strlen(stringf);k++){
-                    
+          }
 
-                    if(k==strlen(stringf)-1){
-                      
-                      
-                      t_dijkstra+=dijkstra(graph,stringf[k-1]-'0',stringf[k]-'0');
-                      choice='E';
-                      break;
-                    }
-                    if(isalpha(stringf[k])){
-                       
-                        choice=stringf[k];
-                        break;
-                    }
-                    
-                    if(dijkstra(graph,stringf[k-1]-'0',stringf[k]-'0')==-1){
-                      t_dijkstra=-1;
-                      break;
-                    }
-                    
-                    
-                    ///printf("%c %c\n",stringf[k-1],stringf[k]);
-                    
-                    t_dijkstra+=dijkstra(graph,stringf[k-1]-'0',stringf[k]-'0');  
-            //printf("%d %d\n",k,stringf[k]-'0');
-            //printf("%d %c\n",k,stringf[k]);
+          int first_node = j_t+2;
+          int s = stringf[j_t+1]-'0'; //size of array(number of nodes)
+
+         // printf("\nj_t = %d\n",j_t );
+         // printf("s = %d\n",s );
+         // printf("first_node = %d\n",first_node);
+         // printf("HIIIIIII\n");
+        //  printf("stringf[first_node+s] = %c\n", stringf[first_node+s]);
+         // printf("End of prints\n");
+          
+          int *arr = (int*)malloc(s *sizeof(int));
+          if (arr == NULL){
+            printf("Can't allocate the memory\n");
+            exit(0);
+          }
+
+          int temp,i,j;
+          //copy all nodes into array of integers
+          for(i=0;i<s;i++){
+            *(arr+i) = (*(stringf+(first_node+i))-'0'); // '0' - changes char  to int
+           // printf("arr[%d] = %d\n",i , arr[i]);
+            //printf(*(arr+i));
+            // printf((*(stringf+(first_node))-'0'));
+          }
+          //printf("BLOCK 1\n");
+          
+          //calculates all permutations of a given nodes and
+          //on each permutation calculates all shortest paths between nodes
+          int best_path, current_path;
+          best_path = 999999;
+          for(j=1; j <= s; j++){
+            for(i=0; i < s-1; i++){
+
+              temp=arr[i];
+              arr[i]=arr[i+1];
+              arr[i+1]=temp;
+              
+              //one more loop that goes over all given nodes and finds shortest path between each node
+              current_path = 0;
+              for(int node = 0; node<s-1;  node++){
+                int dijk = dijkstra(graph, *(arr+node), *(arr+(node+1)));
+                if (dijk == -1)
+                  current_path += 100015;
+                // printf("*(arr+%d) = %d\n",node ,*(arr+node));
+                //printf("dijkstra from %d to %d = %d\n",arr[node] , arr[node+1], dijk);
+                current_path += dijk;
+              }
+              // printf("current_path = %d\n", current_path);
+              //finds best solution
+              if (current_path < best_path){
+                best_path = current_path;
+              }
+             // printf("best_path = %d\n", best_path);
             }
-            
-             printf("TSP shortest path: %d\n",t_dijkstra);
-            
-           t_dijkstra=0;
-           
-           j_t++;
-            
-            break;
+          }
+            if(best_path >= 100000){
+            best_path = -1;
+          }
+          printf("TSP shortest path: %d\n",best_path);
+
+          //free the memory
+          free(arr);
+
+          //select next choice
+          if(first_node + s == strlen(stringf)-1){
+            choice = 'E';
+          }
+          if(isalpha(stringf[first_node+s])){
+            choice = stringf[first_node+s];
+           // printf("Next choice =%c\n", choice);
+          }
+          j_t++;
+          //printf("END OF T\n");
+          break;
         
         default:
             break;

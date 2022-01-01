@@ -122,6 +122,7 @@ void addEdge(struct Graph* graph, int src,
    
   //free(graph1);
 }
+
 void removenode(struct Graph* graph,int key){
 
     for(int i=0;i<ve;i++){
@@ -129,7 +130,7 @@ void removenode(struct Graph* graph,int key){
        
        struct Node* n=graph->array[i].head;  
        deleteNode(&n,key);
-        (graph)->array[key].src_vi=1;
+       (graph)->array[key].src_vi=1;
     }
     
     }
@@ -139,6 +140,7 @@ void removenode(struct Graph* graph,int key){
 }
 void deleteNode(struct Node** head_ref, int key)
 {
+     //printf("%d\n",key);
     // Store head node
     struct Node *temp = *head_ref, *prev;
  
@@ -159,7 +161,7 @@ void deleteNode(struct Node** head_ref, int key)
  
     // Unlink the node from linked list
     prev->next = temp->next;
- 
+   
     free(temp); // Free memory
 }
 
@@ -170,12 +172,20 @@ void deleteNode(struct Node** head_ref, int key)
 // Iterative function to delete a linked list
 
 void ifwehavenode(struct Graph* graph,int key){//if we have node delete adj of node
-    if((graph)->array[key].src_vi=0){
-        struct Node* n=graph->array[key].head;
+   
+       
+      struct Node* n=graph->array[key].head;
        
         deleteListgraph(&n);
+        graph->array[key].head = NULL;
+       // if(graph->array[key].head==NULL){
+           // printf("%d \n",key);
+        //}
+        
        
-    }
+        
+     // printf("%d\n",key);
+    
      
      
 }
@@ -184,7 +194,7 @@ void deleteListgraph(struct Node** head_ref)
    /* deref head_ref to get the real head */
    struct Node* current = *head_ref;
    struct Node* next;
- 
+    // printf("%d \n",head_ref[0]->dest);
    while (current != NULL)
    {
        next = current->next;
@@ -194,7 +204,7 @@ void deleteListgraph(struct Node** head_ref)
    
    /* deref head_ref to affect the real head back
       in the caller. */
-   *head_ref = NULL;
+  
 } 
 // Structure to represent a min heap node
 struct MinHeapNode
@@ -420,6 +430,7 @@ int dijkstra(struct Graph* graph, int src,int dest)
     // is not yet finalized.
     while (!isEmpty(minHeap))
     {
+        
         // Extract the vertex with 
         // minimum distance value
         struct MinHeapNode* minHeapNode = 
@@ -434,8 +445,10 @@ int dijkstra(struct Graph* graph, int src,int dest)
         // their distance values
         struct Node* pCrawl =
                      graph->array[u].head;
+       
         while (pCrawl != NULL)
         {
+           //printf("%d \n",pCrawl->dest);
             int v = pCrawl->dest;
            // printf(" %d ",dist[1]);
             // If shortest distance to v is
