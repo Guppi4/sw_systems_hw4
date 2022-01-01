@@ -1,10 +1,17 @@
 #ifndef POINT_H
 #define POINT_H
-
+#include "miheap.h"
 struct Graph;
 
 struct MinHeap;
 struct MinHeapNode;
+struct Node;
+void removenode(struct Graph* graph,int key);
+void deleteNode(struct Node** head_ref, int key);
+
+void deleteListgraph(struct Node** head_ref);
+void ifwehavenode(struct Graph* graph,int key);
+
 void minHeapify(struct MinHeap* minHeap, int idx);
 int dijkstra(struct Graph* graph, int src,int dest);
 int isInMinHeap(struct MinHeap *minHeap, int v);

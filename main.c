@@ -58,12 +58,13 @@ int i=0;
           
      //printf("%s",stringf);    
 struct Graph* graph = createGraph();
-int j_t;
+int j_t=0;
 int j_s;
-int j_d;
-int j_b;
+int j_d=0;
+int j_b=0;
 int t_dijkstra=0;
-//printf("%d ",js);
+int tr_dijkstra=0;
+printf("%s ",stringf);
 do{
         
         
@@ -92,11 +93,56 @@ do{
             }
              if(!isalpha(stringf[i-1]) && !isalpha(stringf[i+1])){
                addEdge(graph,k,stringf[i+1]-'0',stringf[i+2]-'0');
-             //printf("%d %d %d\n",k,stringf[i+1]-'0',stringf[i+2]-'0');
+            // printf("%d %d %d\n",k,stringf[i+1]-'0',stringf[i+2]-'0');
              }
             }
                
             break;     
+        
+        case 'B':
+           for (int i=j_b;stringf[i]!='B' && i<strlen(stringf);i++){
+              j_b++;
+           }
+            ifwehavenode(graph,stringf[j_b+1]-'0');
+           for(int i=j_b+1;i<strlen(stringf);i+=2){
+             //printf("%c ",stringf[i+1]);
+                    if(i==strlen(stringf)-2){
+                      choice='E';
+                      j_b++;
+                      break;
+                    }
+              //printf(" %c",stringf[i]);
+              
+              if( stringf[i+1]=='T' || stringf[i+1]=='S' || stringf[i+1]=='D' || stringf[i+1]=='B' ){
+                    choice=stringf[i+1];
+                  j_b++;
+                  break;
+              }
+            
+             
+               addEdge(graph,stringf[j_b+1]-'0',stringf[i+1]-'0',stringf[i+2]-'0');
+             printf("%d %d %d\n",stringf[j_b+1]-'0',stringf[i+1]-'0',stringf[i+2]-'0');
+             
+            }
+           
+        break;
+        case 'D':
+         //printf("Hello");
+         for (int i=j_d;stringf[i-1]!='D';i++){
+              j_d++;
+           }
+           removenode(graph,(stringf[i]-'0'));
+           
+          if(strlen(stringf)-2==j_d){
+             choice='E';
+             break;   
+              }
+              else{
+               choice=stringf[j_d+1];
+               break;
+              }
+        
+        break;
         case 'S':
 		      for (j_s=0;stringf[j_s]!='S' && j_s<strlen(stringf);j_s++){
               
@@ -105,7 +151,7 @@ do{
          printf("Dijsktra shortest path: %d\n",dijkstra(graph, stringf[j_s+1]-'0',stringf[j_s+2]-'0'));
          //printf("%d %d",j_s+2,strlen(stringf)-2);
          if(strlen(stringf)-2==j_s+2){
-             choice='D';
+             choice='E';
              break;   
               }
          ///printf("this  is S");
@@ -114,26 +160,44 @@ do{
             break;	 
         
         case 'T': 
-           for (j_t=0;stringf[j_t]!='T';j_t++){
-              
+           for (int i=j_t;stringf[i]!='T';i++){
+              j_t++;
            }
-            for(int k=j_t+3; k<strlen(stringf)-2;k++){
+            //printf("%d %ld\n",j_t+3,strlen(stringf)-2);
+            for(int k=j_t+3; k<=strlen(stringf);k++){
+                    
+
+                    if(k==strlen(stringf)-1){
+                      
+                      
+                      t_dijkstra+=dijkstra(graph,stringf[k-1]-'0',stringf[k]-'0');
+                      choice='E';
+                      break;
+                    }
                     if(isalpha(stringf[k])){
+                       
                         choice=stringf[k];
                         break;
                     }
-                    if(k==strlen(stringf)-2){
-                      choice='D';
-                      t_dijkstra+=dijkstra(graph,stringf[k-1]-'0',stringf[k]-'0');
+                    
+                    if(dijkstra(graph,stringf[k-1]-'0',stringf[k]-'0')==-1){
+                      t_dijkstra=-1;
                       break;
                     }
                     
+                    
+                    ///printf("%c %c\n",stringf[k-1],stringf[k]);
+                    
                     t_dijkstra+=dijkstra(graph,stringf[k-1]-'0',stringf[k]-'0');  
             //printf("%d %d\n",k,stringf[k]-'0');
+            //printf("%d %c\n",k,stringf[k]);
             }
-            printf("TSP shortest path: %d\n",t_dijkstra);
+            
+             printf("TSP shortest path: %d\n",t_dijkstra);
+            
+           t_dijkstra=0;
            
-           
+           j_t++;
             
             break;
         
@@ -141,7 +205,7 @@ do{
             break;
        
         }
-    }while (choice != 'D');   
+    }while (choice != 'E');   
        
 
  

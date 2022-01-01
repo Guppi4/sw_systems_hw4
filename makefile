@@ -28,7 +28,7 @@ main.o:main.c miheap.h
 
 
 
-my_mat.o: miheap.c
+myheap.o: miheap.c
 	$(CC) $(FLAGS) -c miheap.c
 
 

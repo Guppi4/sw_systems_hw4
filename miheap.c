@@ -3,7 +3,7 @@
 #include <limits.h>
   #include <stdbool.h>
 #include "miheap.h"
-#define ve 1000000
+#define ve 100000
 // A structure to represent a 
 // node in adjacency list
 struct MinHeap
@@ -47,7 +47,7 @@ struct Graph
     int vertex;
     struct List* array;
 };
-  
+ 
 // A utility function to create 
 // a new adjacency list node
 struct Node* new_Node(
@@ -64,6 +64,7 @@ struct Node* new_Node(
   
 // A utility function that creates 
 // a graph of V vertices
+
 struct Graph* createGraph(int V)
 {
     
@@ -100,7 +101,8 @@ void addEdge(struct Graph* graph, int src,
    }
   
     if((graph)->array[src].src_vi==1){
-        
+       
+   
         (graph)->vertex+=1;
         (graph)->array[src].src_vi=0;
        
@@ -111,16 +113,89 @@ void addEdge(struct Graph* graph, int src,
         
     }
   
-    
-     //
-             
-    struct Node* newNode = 
+     struct Node* newNode = 
             new_Node(dest, weight);
     newNode->next = (graph)->array[src].head;
-    (graph)->array[src].head = newNode;
+      (graph)->array[src].head = newNode;
+             
+    
    
   //free(graph1);
 }
+void removenode(struct Graph* graph,int key){
+
+    for(int i=0;i<ve;i++){
+       if((graph)->array[key].src_vi=0){
+       
+       struct Node* n=graph->array[i].head;  
+       deleteNode(&n,key);
+        (graph)->array[key].src_vi=1;
+    }
+    
+    }
+   
+   
+   
+}
+void deleteNode(struct Node** head_ref, int key)
+{
+    // Store head node
+    struct Node *temp = *head_ref, *prev;
+ 
+    // If head node itself holds the key to be deleted
+    if (temp != NULL && temp->dest == key) {
+        *head_ref = temp->next; // Changed head
+        free(temp); // free old head
+        return;
+    }
+  while (temp != NULL && temp->dest != key) {
+        prev = temp;
+        temp = temp->next;
+    }
+ 
+    // If key was not present in linked list
+    if (temp == NULL)
+        return;
+ 
+    // Unlink the node from linked list
+    prev->next = temp->next;
+ 
+    free(temp); // Free memory
+}
+
+
+
+
+
+// Iterative function to delete a linked list
+
+void ifwehavenode(struct Graph* graph,int key){//if we have node delete adj of node
+    if((graph)->array[key].src_vi=0){
+        struct Node* n=graph->array[key].head;
+       
+        deleteListgraph(&n);
+       
+    }
+     
+     
+}
+void deleteListgraph(struct Node** head_ref)
+{
+   /* deref head_ref to get the real head */
+   struct Node* current = *head_ref;
+   struct Node* next;
+ 
+   while (current != NULL)
+   {
+       next = current->next;
+       free(current);
+       current = next;
+   }
+   
+   /* deref head_ref to affect the real head back
+      in the caller. */
+   *head_ref = NULL;
+} 
 // Structure to represent a min heap node
 struct MinHeapNode
 {
@@ -308,19 +383,19 @@ int dijkstra(struct Graph* graph, int src,int dest)
 {
     
     // Get the number of vertices in graph
-    int V = graph->vertex;
+    int V = ve;
     //printf("%d", graph->vertex);  
     // dist values used to pick
     // minimum weight edge in cut
-    int dist[V];     
+    int dist[ve];     
   
     // minHeap represents set E
     struct MinHeap* minHeap = createMinHeap(V);
   
     // Initialize min heap with all 
     // vertices. dist value of all vertices 
-    for (int v = 0; v < V; ++v)
-    {
+    for (int v = 0; v < ve; ++v)
+    {  
         dist[v] = INT_MAX;
         minHeap->array[v] = newMinHeapNode(v, 
                                       dist[v]);
