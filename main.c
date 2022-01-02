@@ -226,14 +226,24 @@ do{
             if(best_path >= 100000){
             best_path = -1;
           }
-          printf("TSP shortest path: %d\n",best_path);
-
+          
           //free the memory
           free(arr);
 
+
+          int last = 0;
           //select next choice
           if(first_node + s == strlen(stringf)-1){
             choice = 'E';
+            last = 1;
+          }
+
+          if (last){
+            printf("TSP shortest path: %d",best_path);
+
+          }
+          else{
+            printf("TSP shortest path: %d\n",best_path);
           }
           if(isalpha(stringf[first_node+s])){
             choice = stringf[first_node+s];
