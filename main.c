@@ -64,7 +64,7 @@ int j_d=0;
 int j_b=0;
 int t_dijkstra=0;
 int tr_dijkstra=0;
-printf("%s",stringf);
+//printf("%s",stringf);
 do{
         
         
