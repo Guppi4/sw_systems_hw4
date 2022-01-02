@@ -73,7 +73,8 @@ do{
         case 'A':
           
              //printf("TTT");
-         
+         freegraph(graph);
+           graph=createGraph();
             for(int i=1;i<strlen(stringf);i+=2){
              //printf("%c ",stringf[i+1]);
             
@@ -238,13 +239,12 @@ do{
             last = 1;
           }
 
-          if (last){
-            printf("TSP shortest path: %d",best_path);
+         
+         
 
-          }
-          else{
+         
             printf("TSP shortest path: %d\n",best_path);
-          }
+          
           if(isalpha(stringf[first_node+s])){
             choice = stringf[first_node+s];
            // printf("Next choice =%c\n", choice);
