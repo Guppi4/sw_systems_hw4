@@ -87,7 +87,16 @@ struct Graph* createGraph(int V)
     }
     return graph;
 }
-  
+void freegraph(struct Graph* graph)  {
+    for (int i = 0; i < ve; ++i){
+         deleteListgraph(&graph->array[i].head);
+        
+        graph->array[i].head = NULL;
+    }    
+   free(graph->array) ;
+   free(graph);
+    
+}
 // Adds an edge to an undirected graph
 void addEdge(struct Graph* graph, int src, 
                    int dest, int weight)

@@ -11,7 +11,7 @@ void deleteNode(struct Node** head_ref, int key);
 
 void deleteListgraph(struct Node** head_ref);
 void ifwehavenode(struct Graph* graph,int key);
-
+void freegraph(struct Graph* graph);
 void minHeapify(struct MinHeap* minHeap, int idx);
 int dijkstra(struct Graph* graph, int src,int dest);
 int isInMinHeap(struct MinHeap *minHeap, int v);
