@@ -244,11 +244,11 @@ do{
           }
 
            if (last){
-            printf("TSP shortest path: %d",best_path);
+            printf("TSP shortest path: %d ",best_path);
 
            }
             else{
-              printf("TSP shortest path: %d\n",best_path);
+              printf("TSP shortest path: %d \n",best_path);
             }
          
 
