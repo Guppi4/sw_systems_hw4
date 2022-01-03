@@ -235,12 +235,12 @@ do{
           free(arr);
 
 
-          int last = 0;
+          
           //select next choice
           if(first_node + s == strlen(stringf)-1){
             freegraph(graph);
             choice = 'E';
-            last = 1;
+            
           }
 
           
@@ -264,7 +264,12 @@ do{
        
         }
     }while (choice != 'E');   
-       
+     freegraph(graph);
+     //free(buf);
+     //free(line);
+     //free(stringf);
+     //free(s);
+     //free(s1)  ;
 
  
  
