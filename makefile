@@ -1,10 +1,10 @@
 CC = gcc
 FLAGS = -Wall -g
 
-all:stringProg s d    
+all:graph s d    
 
-stringProg: main.o  libds.a 
-		$(CC) $(FLAGS) -o stringProg  main.o libds.a -lm
+graph: main.o  libds.a 
+		$(CC) $(FLAGS) -o graph  main.o libds.a -lm
 
 
   
@@ -34,4 +34,4 @@ myheap.o: miheap.c
 
 .PHONY:	clean all
 clean:
-	rm -f *.o  stringProg s d libds.a libdd.so
+	rm -f *.o  graph s d libds.a libdd.so

@@ -110,6 +110,7 @@ do{
            for(int i=j_b+1;i<strlen(stringf);i+=2){
              ///printf("%c ",stringf[i+1]);
                     if(i==strlen(stringf)-2){
+                      freegraph(graph);
                       choice='E';
                       j_b++;
                       break;
@@ -138,6 +139,7 @@ do{
            removenode(graph,(stringf[i]-'0'));
            
           if(strlen(stringf)-2==j_d){
+             freegraph(graph);
              choice='E';
              break;   
               }
@@ -155,6 +157,7 @@ do{
          printf("Dijsktra shortest path: %d\n",dijkstra(graph, stringf[j_s+1]-'0',stringf[j_s+2]-'0'));
          //printf("%d %d",j_s+2,strlen(stringf)-2);
          if(strlen(stringf)-2==j_s+2){
+             freegraph(graph);
              choice='E';
              break;   
               }
@@ -235,6 +238,7 @@ do{
           int last = 0;
           //select next choice
           if(first_node + s == strlen(stringf)-1){
+            freegraph(graph);
             choice = 'E';
             last = 1;
           }
