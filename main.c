@@ -154,7 +154,7 @@ do{
               
            }
            // printf("%c",stringf[j_s]);
-         printf("Dijsktra shortest path: %d\n",dijkstra(graph, stringf[j_s+1]-'0',stringf[j_s+2]-'0'));
+         printf("Dijsktra shortest path: %d \n",dijkstra(graph, stringf[j_s+1]-'0',stringf[j_s+2]-'0'));
          //printf("%d %d",j_s+2,strlen(stringf)-2);
          if(strlen(stringf)-2==j_s+2){
              freegraph(graph);
@@ -264,7 +264,7 @@ do{
        
         }
     }while (choice != 'E');   
-     freegraph(graph);
+     //freegraph(graph);
      //free(buf);
      //free(line);
      //free(stringf);
