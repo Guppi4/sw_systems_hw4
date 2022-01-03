@@ -20,11 +20,11 @@ char stringf[a];
 
 char line[a];
 char buf[a][a];
-int count=0;
-int array[a];
+
+
 char s[a] ;
 char choice;
-char c1;
+
 char s1[a];
 int k;    
 int i=0;
@@ -62,8 +62,8 @@ int j_t=0;
 int j_s;
 int j_d=0;
 int j_b=0;
-int t_dijkstra=0;
-int tr_dijkstra=0;
+
+
 //printf("%s",stringf);
 do{
         
@@ -243,11 +243,17 @@ do{
             last = 1;
           }
 
-         
+           if (last){
+            printf("TSP shortest path: %d",best_path);
+
+           }
+            else{
+              printf("TSP shortest path: %d\n",best_path);
+            }
          
 
          
-            printf("TSP shortest path: %d\n",best_path);
+            
           
           if(isalpha(stringf[first_node+s])){
             choice = stringf[first_node+s];
