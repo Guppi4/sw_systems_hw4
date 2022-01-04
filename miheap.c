@@ -236,7 +236,12 @@ struct MinHeapNode* newMinHeapNode(int v,
     minHeapNode->dist = dist;
     return minHeapNode;
 }
-  
+ void  freeMinHeap(struct MinHeap* m)
+{
+   free(m->array);
+   free(m) ;
+   
+} 
 // A utility function to create a Min Heap
 struct MinHeap* createMinHeap(int capacity)
 {
@@ -476,11 +481,13 @@ int dijkstra(struct Graph* graph, int src,int dest)
             }
             pCrawl = pCrawl->next;
         }
+       free(minHeapNode);
     }
      
     if(dist[dest]==INT_MAX){
         return -1;
     }
+    freeMinHeap(minHeap);
     //printf("%d\n",graph->vertex);
     // print the calculated shortest distances
      return dist[dest];

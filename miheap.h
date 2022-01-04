@@ -8,7 +8,7 @@ struct MinHeapNode;
 struct Node;
 void removenode(struct Graph* graph,int key);
 void deleteNode(struct Node** head_ref, int key);
-
+void  freeMinHeap(struct MinHeap* m);
 void deleteListgraph(struct Node** head_ref);
 void ifwehavenode(struct Graph* graph,int key);
 void freegraph(struct Graph* graph);
