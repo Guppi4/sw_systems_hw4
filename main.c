@@ -16,16 +16,16 @@
 int main()
 {
 
-char stringf[a];
+char stringf[a]="";
 
 char line[a];
 char buf[a][a];
 
 
-char s[a] ;
+char s[a]="" ;
 char choice;
 
-char s1[a];
+char s1[a]="";
 int k;    
 int i=0;
   while (fgets(line, sizeof(line), stdin)) {
@@ -75,9 +75,14 @@ do{
              //printf("TTT");
          freegraph(graph);
            graph=createGraph();
-            for(int i=1;i<strlen(stringf);i+=2){
+            for(int i=1;i<strlen(stringf)-1;i+=2){
              //printf("%c ",stringf[i+1]);
-            
+              if(i==strlen(stringf)-2){
+                      freegraph(graph);
+                      choice='E';
+                    
+                      break;
+                    }
               //printf(" %c",stringf[i]);
               if( stringf[i+1]=='T' || stringf[i+1]=='S' || stringf[i+1]=='D' || stringf[i+1]=='B' ){
                     choice=stringf[i+1];
@@ -231,8 +236,12 @@ do{
             best_path = -1;
           }
           
-          //free the memory
-          free(arr);
+          
+          
+             free(arr);
+          
+          
+         
 
 
           

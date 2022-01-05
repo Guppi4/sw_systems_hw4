@@ -3,7 +3,7 @@
 #include <limits.h>
   #include <stdbool.h>
 #include "miheap.h"
-#define ve 100000
+#define ve 100
 // A structure to represent a 
 // node in adjacency list
 struct MinHeap
@@ -69,7 +69,7 @@ struct Graph* createGraph(int V)
 {
     
     struct Graph* graph = (struct Graph*) 
-            malloc(ve*sizeof(struct Graph));
+            malloc(sizeof(struct Graph));
     graph->vertex = 0;
     
     
@@ -239,6 +239,7 @@ struct MinHeapNode* newMinHeapNode(int v,
  void  freeMinHeap(struct MinHeap* m)
 {
    free(m->array);
+   free(m->pos);
    free(m) ;
    
 } 
@@ -310,6 +311,7 @@ void minHeapify(struct MinHeap* minHeap,
                          &minHeap->array[idx]);
   
         minHeapify(minHeap, smallest);
+       
     }
 }
   
@@ -331,12 +333,13 @@ struct MinHeapNode* extractMin(struct MinHeap*
     // Store the root node
     struct MinHeapNode* root = 
                    minHeap->array[0];
-  
+    
     // Replace root node with last node
     struct MinHeapNode* lastNode = 
          minHeap->array[minHeap->size - 1];
+    
     minHeap->array[0] = lastNode;
-  
+     // free(root);
     // Update position of last node
     minHeap->pos[root->v] = minHeap->size-1;
     minHeap->pos[lastNode->v] = 0;
@@ -412,29 +415,31 @@ int dijkstra(struct Graph* graph, int src,int dest)
     // dist values used to pick
     // minimum weight edge in cut
     int dist[ve];     
-  
+   struct MinHeap* minHeap=NULL;
     // minHeap represents set E
-    struct MinHeap* minHeap = createMinHeap(V);
-  
+     minHeap = createMinHeap(V);
+    
     // Initialize min heap with all 
     // vertices. dist value of all vertices 
-    for (int v = 0; v < ve; ++v)
+    for (int v = 0; v <ve; ++v)
     {  
+        
         dist[v] = INT_MAX;
         minHeap->array[v] = newMinHeapNode(v, 
                                       dist[v]);
         minHeap->pos[v] = v;
     
+    
     }
-  
+
     // Make dist value of src vertex 
     // as 0 so that it is extracted first
-    minHeap->array[src] = 
-          newMinHeapNode(src, dist[src]);
+    minHeap->array[src]->dist=0;
+    minHeap->array[src]->v=src;   
     minHeap->pos[src]   = src;
     dist[src] = 0;
     decreaseKey(minHeap, src, dist[src]);
-  
+   
     // Initially size of min heap is equal to V
     minHeap->size = V;
   
@@ -445,21 +450,24 @@ int dijkstra(struct Graph* graph, int src,int dest)
     while (!isEmpty(minHeap))
     {
         
+        
+    
         // Extract the vertex with 
         // minimum distance value
         struct MinHeapNode* minHeapNode = 
                      extractMin(minHeap);
-        
+         
+
         // Store the extracted vertex number
         int u = minHeapNode->v; 
-  
+       // minHeap->array[u]=NULL;
         // Traverse through all adjacent 
         // vertices of u (the extracted
         // vertex) and update 
         // their distance values
         struct Node* pCrawl =
                      graph->array[u].head;
-       
+        
         while (pCrawl != NULL)
         {
            //printf("%d \n",pCrawl->dest);
@@ -478,16 +486,38 @@ int dijkstra(struct Graph* graph, int src,int dest)
                 // update distance 
                 // value in min heap also
                 decreaseKey(minHeap, v, dist[v]);
+              /// free(minHeap->array[u]);
             }
             pCrawl = pCrawl->next;
+          
         }
        free(minHeapNode);
+       
+       //free(pCrawl);
     }
      
+    free(minHeap->pos);
+    
+     
+    
+    
+    free(minHeap->array);
+    
+
+
+
+    free(minHeap);
+    minHeap==NULL;
     if(dist[dest]==INT_MAX){
         return -1;
     }
-    freeMinHeap(minHeap);
+    
+    
+  
+    
+    
+    //freeMinHeap(minHeap);
+    
     //printf("%d\n",graph->vertex);
     // print the calculated shortest distances
      return dist[dest];
