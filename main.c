@@ -172,41 +172,33 @@ do{
             break;	 
         
        case 'T': 
-           //find index of TSP chars in the string
+           //find index 
           for (int i=j_t;stringf[i]!='T';i++){
               j_t++;
           }
 
           int first_node = j_t+2;
-          int s = stringf[j_t+1]-'0'; //size of array(number of nodes)
+          int s = stringf[j_t+1]-'0'; 
 
-         // printf("\nj_t = %d\n",j_t );
-         // printf("s = %d\n",s );
-         // printf("first_node = %d\n",first_node);
-         // printf("HIIIIIII\n");
-        //  printf("stringf[first_node+s] = %c\n", stringf[first_node+s]);
-         // printf("End of prints\n");
+         
           
           int *arr = (int*)malloc(s *sizeof(int));
           if (arr == NULL){
-            printf("Can't allocate the memory\n");
+           
             exit(0);
           }
 
           int temp,i,j;
-          //copy all nodes into array of integers
+        
           for(i=0;i<s;i++){
-            *(arr+i) = (*(stringf+(first_node+i))-'0'); // '0' - changes char  to int
-           // printf("arr[%d] = %d\n",i , arr[i]);
-            //printf(*(arr+i));
-            // printf((*(stringf+(first_node))-'0'));
+            *(arr+i) = (*(stringf+(first_node+i))-'0'); 
+           
           }
-          //printf("BLOCK 1\n");
+         
           
-          //calculates all permutations of a given nodes and
-          //on each permutation calculates all shortest paths between nodes
+          
           int best_path, current_path;
-          best_path = 999999;
+          best_path = 1000000;
           for(j=1; j <= s; j++){
             for(i=0; i < s-1; i++){
 
@@ -214,22 +206,21 @@ do{
               arr[i]=arr[i+1];
               arr[i+1]=temp;
               
-              //one more loop that goes over all given nodes and finds shortest path between each node
+              
               current_path = 0;
               for(int node = 0; node<s-1;  node++){
                 int dijk = dijkstra(graph, *(arr+node), *(arr+(node+1)));
                 if (dijk == -1)
                   current_path += 100015;
-                // printf("*(arr+%d) = %d\n",node ,*(arr+node));
-                //printf("dijkstra from %d to %d = %d\n",arr[node] , arr[node+1], dijk);
-                current_path += dijk;
+                 current_path += dijk;
+                
               }
               // printf("current_path = %d\n", current_path);
-              //finds best solution
+           
               if (current_path < best_path){
                 best_path = current_path;
               }
-             // printf("best_path = %d\n", best_path);
+          
             }
           }
             if(best_path >= 100000){
@@ -245,7 +236,7 @@ do{
 
 
           
-          //select next choice
+          
           if(first_node + s == strlen(stringf)-1){
             freegraph(graph);
             choice = 'E';

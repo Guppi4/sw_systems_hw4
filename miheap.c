@@ -4,8 +4,7 @@
   #include <stdbool.h>
 #include "miheap.h"
 #define ve 100
-// A structure to represent a 
-// node in adjacency list
+
 struct MinHeap
 {
       
@@ -38,9 +37,7 @@ struct List
 };
   
 // A structure to represent a graph. 
-// A graph is an array of adjacency lists.
-// Size of array will be V (number of 
-// vertices in graph)
+
 struct Graph
 {
     int here;
@@ -48,7 +45,7 @@ struct Graph
     struct List* array;
 };
  
-// A utility function to create 
+
 // a new adjacency list node
 struct Node* new_Node(
                    int dest, int weight)
@@ -74,12 +71,12 @@ struct Graph* createGraph(int V)
     
     
     // Create an array of adjacency lists.  
-    // Size of array will be V
+    
     graph->array = (struct List*) 
        malloc(ve * sizeof(struct List));
   
     // Initialize each adjacency list 
-    // as empty by making head as NULL
+  
     for (int i = 0; i < ve; ++i){
         
         graph->array[i].head = NULL;
@@ -200,7 +197,7 @@ void ifwehavenode(struct Graph* graph,int key){//if we have node delete adj of n
 }
 void deleteListgraph(struct Node** head_ref)
 {
-   /* deref head_ref to get the real head */
+ 
    struct Node* current = *head_ref;
    struct Node* next;
     // printf("%d \n",head_ref[0]->dest);
@@ -211,8 +208,7 @@ void deleteListgraph(struct Node** head_ref)
        current = next;
    }
    
-   /* deref head_ref to affect the real head back
-      in the caller. */
+  
   
 } 
 // Structure to represent a min heap node
@@ -224,8 +220,7 @@ struct MinHeapNode
   
 // Structure to represent a min heap
 
-// A utility function to create a 
-// new Min Heap Node
+
 struct MinHeapNode* newMinHeapNode(int v, 
                                  int dist)
 {
@@ -261,8 +256,7 @@ struct MinHeap* createMinHeap(int capacity)
 }
   
 // A utility function to swap two 
-// nodes of min heap. 
-// Needed for min heapify
+
 void swapMinHeapNode(struct MinHeapNode** a, 
                      struct MinHeapNode** b)
 {
@@ -271,11 +265,9 @@ void swapMinHeapNode(struct MinHeapNode** a,
     *b = t;
 }
   
-// A standard function to 
+
 // heapify at given idx
-// This function also updates 
-// position of nodes when they are swapped.
-// Position is needed for decreaseKey()
+
 void minHeapify(struct MinHeap* minHeap, 
                                   int idx)
 {
@@ -315,14 +307,13 @@ void minHeapify(struct MinHeap* minHeap,
     }
 }
   
-// A utility function to check if 
-// the given minHeap is ampty or not
+
 int isEmpty(struct MinHeap* minHeap)
 {
     return minHeap->size == 0;
 }
   
-// Standard function to extract 
+
 // minimum node from heap
 struct MinHeapNode* extractMin(struct MinHeap* 
                                    minHeap)
@@ -334,7 +325,7 @@ struct MinHeapNode* extractMin(struct MinHeap*
     struct MinHeapNode* root = 
                    minHeap->array[0];
     
-    // Replace root node with last node
+ 
     struct MinHeapNode* lastNode = 
          minHeap->array[minHeap->size - 1];
     
@@ -352,9 +343,7 @@ struct MinHeapNode* extractMin(struct MinHeap*
 }
   
 // Function to decreasy dist value 
-// of a given vertex v. This function
-// uses pos[] of min heap to get the
-// current index of node in min heap
+
 void decreaseKey(struct MinHeap* minHeap, 
                          int v, int dist)
 {
@@ -366,7 +355,7 @@ void decreaseKey(struct MinHeap* minHeap,
   
     // Travel up while the complete 
     // tree is not hepified.
-    // This is a O(Logn) loop
+    
     while (i && minHeap->array[i]->dist < 
            minHeap->array[(i - 1) / 2]->dist)
     {
@@ -405,22 +394,20 @@ void printArr(int dist[], int n)
   
 // The main function that calculates 
 // distances of shortest paths from src to all
-// vertices. It is a O(ELogV) function
+
 int dijkstra(struct Graph* graph, int src,int dest)
 {
     
     // Get the number of vertices in graph
     int V = ve;
     //printf("%d", graph->vertex);  
-    // dist values used to pick
-    // minimum weight edge in cut
+    
     int dist[ve];     
    struct MinHeap* minHeap=NULL;
     // minHeap represents set E
      minHeap = createMinHeap(V);
     
-    // Initialize min heap with all 
-    // vertices. dist value of all vertices 
+  
     for (int v = 0; v <ve; ++v)
     {  
         
@@ -443,10 +430,9 @@ int dijkstra(struct Graph* graph, int src,int dest)
     // Initially size of min heap is equal to V
     minHeap->size = V;
   
-    // In the followin loop, 
+    // In the followin l;loop, 
     // min heap contains all nodes
-    // whose shortest distance 
-    // is not yet finalized.
+   
     while (!isEmpty(minHeap))
     {
         
@@ -462,9 +448,7 @@ int dijkstra(struct Graph* graph, int src,int dest)
         int u = minHeapNode->v; 
        // minHeap->array[u]=NULL;
         // Traverse through all adjacent 
-        // vertices of u (the extracted
-        // vertex) and update 
-        // their distance values
+       
         struct Node* pCrawl =
                      graph->array[u].head;
         
@@ -473,10 +457,7 @@ int dijkstra(struct Graph* graph, int src,int dest)
            //printf("%d \n",pCrawl->dest);
             int v = pCrawl->dest;
            // printf(" %d ",dist[1]);
-            // If shortest distance to v is
-            // not finalized yet, and distance to v
-            // through u is less than its 
-            // previously calculated distance
+            
             if (isInMinHeap(minHeap, v) && 
                       dist[u] != INT_MAX && 
               pCrawl->weight + dist[u] < dist[v])
